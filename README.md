@@ -1,4 +1,10 @@
-# calc
+# vue-calculator
+
+## Description
+A very basic calculator made with Vue.js for learning purposes. Design shamelessly stolen from Apple Calculator :D
+
+## Try it out
+[Try it immediately in your browser](https://felipebrendel.github.io/vue-calculator/)
 
 ## Project setup
 ```
