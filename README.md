@@ -1,4 +1,7 @@
-# calc
+# vue-calculator
+
+## Description
+A very basic calculator made with Vue.js for learning purposes. Design shamelessly stolen from Apple Calculator :D
 
 ## Project setup
 ```
