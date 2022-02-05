@@ -1,12 +1,12 @@
 <template>
   <div class="grid-container">
+    <span class="grid-item input-area">{{input||0}}</span>
     <calc-butt
-      :class="{'grid-item':true, 'wide-button':i=='0'}"
+      :class="{'grid-item':true, 'wide-button':i=='0', 'gray-button': i >= '0' && i <= '9' || i == '.', 'darkgray-button': i == '+/-' || i == 'AC' || i == '%', 'light-button': ['+', '-', 'x', '/', '='].includes(i), 'active-operator': i == operator}"
       v-for="i in digits" 
       :key="i" 
       :label="i" 
       @click="inputDigit(i)" />
-    <span class="grid-item input-area">{{input||0}}</span>
   </div>
 </template>
 
@@ -69,36 +69,58 @@ export default {
           }
           break;
         case 'AC':
+          this.operator = undefined;
+          this.operand1 = 0;
+          this.operand2 = undefined;
+          this.input = undefined;
+          this.shouldReset = true;
           break;
         case '+/-':
+          this.input = (- this.numeric_input).toString();
           break;
         case '%':
           break;
-      }
+      }      
+    },
+    round: function(number, decimalPlaces) {
+        const factorOfTen = Math.pow(10, decimalPlaces);
+
+        return Math.round(number * factorOfTen) / factorOfTen;
     },
     compute: function() {
       if (!(this.operand1 && this.operand2 && this.operator)) {
         return 0;
       }
 
+      var result = 0;
+
       switch (this.operator) {
         case '+':
-          return this.operand1 + this.operand2;
+          result = this.operand1 + this.operand2;
+          break;
         case '-':
-          return this.operand1 - this.operand2;
+          result = this.operand1 - this.operand2;
+          break;
         case 'x':
-          return this.operand1 * this.operand2;
+          result = this.operand1 * this.operand2;
+          break;
         case '/':
-          return this.operand1 / this.operand2;
+          result = this.operand1 / this.operand2;
+          break;
         default:
           return 0;
       }
+
+      return this.round(result, 6);
     }
   }
 }
 </script>
 
 <style>
+body {
+  background: #E7E9EB;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -106,25 +128,44 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  width: 600px;
 }
 .grid-container {
   display: grid;
   grid-template-columns: auto auto auto auto;
-  background-color: #2196F3;
-  padding: 10px;
+  background-color: #504E4F;
+  clip-path: inset(12px round 25px);
+  -webkit-clip-path: inset(12px round 25px);
 }
 .grid-item {
+  color: #EDEDED;
   background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  border: 1px solid #504F4F;
   padding: 20px;
+  margin: 0;
   font-size: 30px;
   text-align: center;
 }
 .wide-button {
   grid-column: span 2;
 }
+.gray-button {
+  background-color: #7B7A7A;
+}
+.darkgray-button {
+  background-color: #61605F;
+}
+.light-button {
+  background-color: #FF9F0A;
+}
 .input-area {
+  background-color: #504F4F;
   grid-column: span 4;
-  background: white;
+  text-align: right;
+  font-size: 60pt;
+  padding-right: 100px;
+}
+.active-operator {
+  background: #ffc10a;
 }
 </style>
