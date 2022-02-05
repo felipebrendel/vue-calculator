@@ -7,6 +7,10 @@
       :key="i" 
       :label="i" 
       @click="inputDigit(i)" />
+
+    <transition name="fade">
+      <span v-if="nice" class="nice">nice!</span>
+    </transition>
   </div>
 </template>
 
@@ -26,6 +30,7 @@ export default {
       operand2: undefined,
       operator: undefined,
       shouldReset: false,
+      nice: false,
     }
   },
   computed: {
@@ -66,6 +71,15 @@ export default {
             this.operand2 = undefined;
             this.operator = undefined;
             this.shouldReset = true;
+
+            /* make text "nice!" appear for a short moment */
+            if (this.input == "69") {
+              this.nice = true;
+
+              setTimeout(() => {
+                this.nice = false;
+              }, 800);
+            }
           }
           break;
         case 'AC':
@@ -167,5 +181,20 @@ body {
 }
 .active-operator {
   background: #ffc10a;
+}
+.nice {
+  font-family: 'Phosphate Solid';
+  font-size: 36pt;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  color: orange;
+  left: 50px;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
