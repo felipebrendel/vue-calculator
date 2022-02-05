@@ -144,7 +144,6 @@ body {
   margin-top: 60px;
   position: relative;
   margin: auto;
-  width: 60%;
 }
 .grid-container {
   display: grid;
@@ -152,6 +151,7 @@ body {
   background-color: #504E4F;
   clip-path: inset(12px round 25px);
   -webkit-clip-path: inset(12px round 25px);
+  aspect-ratio: 2 / 1;
 }
 .grid-item {
   color: #EDEDED;
