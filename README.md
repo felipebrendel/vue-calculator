@@ -28,3 +28,9 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Publish on GitHub Pages
+npm run build
+git commit -am 'redist'
+git push origin main
+git subtree push --prefix dist origin gh-pages
